@@ -2,6 +2,17 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+def boyutlari_esitle(goruntu1, goruntu2):
+    # İki görüntünün boyutlarını eşitle
+    genislik = min(goruntu1.shape[1], goruntu2.shape[1])
+    yukseklik = min(goruntu1.shape[0], goruntu2.shape[0])
+    
+    goruntu1 = cv2.resize(goruntu1, (genislik, yukseklik))
+    goruntu2 = cv2.resize(goruntu2, (genislik, yukseklik))
+    
+    return goruntu1, goruntu2
+
 def farkli_pikselleri_bul(goruntu1, goruntu2):
     # İki görüntü arasındaki farkları bul
     farklar = cv2.absdiff(goruntu1, goruntu2)
@@ -11,6 +22,7 @@ def farkli_pikselleri_bul(goruntu1, goruntu2):
     return farklar_thresh
 
 def goruntuleri_karsilastir(goruntu1, goruntu2):
+    goruntu1, goruntu2 = boyutlari_esitle(goruntu1, goruntu2)
     # Farklı pikselleri bul
     farklar = farkli_pikselleri_bul(goruntu1, goruntu2)
 
